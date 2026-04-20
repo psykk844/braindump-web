@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import InboxCard from "@/components/InboxCard";
-import { addTask } from "@/lib/tasks";
+import { apiFetch } from "@/lib/api-client";
 
 interface Item {
   id: number;
@@ -18,7 +18,7 @@ export default function InboxPage() {
   const [items, setItems] = useState<Item[]>([]);
 
   async function fetchItems() {
-    const res = await fetch("/api/items?processed=false");
+    const res = await apiFetch("/api/items?processed=false");
     const data = await res.json();
     setItems(data);
   }
@@ -35,14 +35,14 @@ export default function InboxPage() {
     if (!item) return;
 
     // Create task
-    await fetch("/api/tasks", {
+    await apiFetch("/api/tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title: item.rawText, bucket: "later" }),
     });
 
     // Mark as processed
-    await fetch(`/api/items/${id}`, {
+    await apiFetch(`/api/items/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ processed: true }),
@@ -52,7 +52,7 @@ export default function InboxPage() {
   }
 
   async function handleArchive(id: number) {
-    await fetch(`/api/items/${id}`, {
+    await apiFetch(`/api/items/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ processed: true }),
@@ -61,7 +61,7 @@ export default function InboxPage() {
   }
 
   async function handleReclassify(id: number, type: string) {
-    await fetch(`/api/items/${id}`, {
+    await apiFetch(`/api/items/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ type }),

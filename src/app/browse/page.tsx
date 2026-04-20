@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { apiFetch } from "@/lib/api-client";
 
 interface Item {
   id: number;
@@ -19,7 +20,7 @@ export default function BrowsePage() {
   const [activeTab, setActiveTab] = useState<TabType>("all");
 
   async function fetchItems() {
-    const res = await fetch("/api/items");
+    const res = await apiFetch("/api/items");
     const data = await res.json();
     setItems(data);
   }

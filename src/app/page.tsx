@@ -13,6 +13,7 @@ import {
 import { arrayMove } from "@dnd-kit/sortable";
 import BucketList from "@/components/BucketList";
 import AddTaskDialog from "@/components/AddTaskDialog";
+import { apiFetch } from "@/lib/api-client";
 
 interface Task {
   id: number;
@@ -35,7 +36,7 @@ export default function BoardPage() {
   );
 
   const fetchTasks = useCallback(async () => {
-    const res = await fetch("/api/tasks");
+    const res = await apiFetch("/api/tasks");
     const data = await res.json();
     setTasks(data);
   }, []);
@@ -58,7 +59,7 @@ export default function BoardPage() {
   async function handleComplete(id: number) {
     // Optimistic update
     setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, bucket: "done" } : t)));
-    await fetch(`/api/tasks/${id}`, {
+    await apiFetch(`/api/tasks/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ completed: true }),
@@ -68,7 +69,7 @@ export default function BoardPage() {
 
   async function handleUpdateNote(id: number, note: string) {
     setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, note } : t)));
-    await fetch(`/api/tasks/${id}`, {
+    await apiFetch(`/api/tasks/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ note }),
@@ -92,7 +93,7 @@ export default function BoardPage() {
       // Cross-bucket drop — check if over.id is a bucket ID
       const targetBucket = String(over.id);
       if (["top5", "next", "later"].includes(targetBucket)) {
-        await fetch(`/api/tasks/${active.id}`, {
+        await apiFetch(`/api/tasks/${active.id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ bucket: targetBucket }),
@@ -113,7 +114,7 @@ export default function BoardPage() {
     });
     setTasks(newTasks);
 
-    await fetch("/api/tasks/reorder", {
+    await apiFetch("/api/tasks/reorder", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ bucket, taskIds: reorderedIds }),
@@ -121,7 +122,7 @@ export default function BoardPage() {
   }
 
   async function handleAddTask(title: string, bucket: string) {
-    await fetch("/api/tasks", {
+    await apiFetch("/api/tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, bucket }),

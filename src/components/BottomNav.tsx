@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { apiFetch } from "@/lib/api-client";
 
 const tabs = [
   { href: "/", label: "Board", icon: "✅", activeIcon: "✅" },
@@ -15,7 +16,7 @@ export default function BottomNav() {
   const [inboxCount, setInboxCount] = useState(0);
 
   useEffect(() => {
-    fetch("/api/items?processed=false")
+    apiFetch("/api/items?processed=false")
       .then((r) => r.json())
       .then((data) => setInboxCount(Array.isArray(data) ? data.length : 0))
       .catch(() => {});
