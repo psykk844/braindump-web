@@ -39,21 +39,23 @@ export default function BucketList({
   const { setNodeRef } = useDroppable({ id: bucket });
 
   return (
-    <div className="mb-4">
+    <div className="mb-6">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex items-center gap-2 w-full text-left py-2"
+        className="flex items-center gap-3 w-full text-left py-2 group"
       >
-        <span>{icon}</span>
-        <span className="font-semibold text-sm text-zinc-300">{label}</span>
-        <span className="text-xs text-zinc-500">({tasks.length})</span>
-        <span className="ml-auto text-zinc-600 text-xs">
-          {expanded ? "▼" : "▶"}
+        <span className="text-lg">{icon}</span>
+        <span className="text-body-medium text-[var(--text-primary)]">{label}</span>
+        <span className="text-label text-[var(--text-quaternary)] bg-[var(--bg-surface)] px-2 py-0.5 rounded-full">
+          {tasks.length}
+        </span>
+        <span className="ml-auto text-[var(--text-quaternary)] group-hover:text-[var(--text-tertiary)] transition-colors text-xs">
+          {expanded ? "−" : "+"}
         </span>
       </button>
 
       {expanded && (
-        <div ref={setNodeRef} className="min-h-[20px]">
+        <div ref={setNodeRef} className="min-h-[20px] mt-2">
           <SortableContext
             items={tasks.map((t) => t.id)}
             strategy={verticalListSortingStrategy}
@@ -71,8 +73,8 @@ export default function BucketList({
             ))}
           </SortableContext>
           {tasks.length === 0 && (
-            <p className="text-xs text-zinc-600 py-3 text-center">
-              No tasks here
+            <p className="text-caption text-[var(--text-quaternary)] py-6 text-center">
+              No tasks
             </p>
           )}
         </div>

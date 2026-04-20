@@ -65,10 +65,10 @@ export default function TaskCard({
   }
 
   return (
-    <div ref={setNodeRef} style={style} className="relative">
+    <div ref={setNodeRef} style={style} className="relative group">
       <div
-        className={`bg-zinc-800 rounded-lg p-3 mb-2 border border-zinc-700 transition-transform ${
-          swipeX > 0 ? "border-green-500/50" : ""
+        className={`card-linear p-3 mb-2 transition-all duration-150 ${
+          swipeX > 0 ? "border-[var(--status-green)]/50" : ""
         }`}
         style={{ transform: `translateX(${swipeX}px)` }}
         onTouchStart={handleTouchStart}
@@ -78,7 +78,8 @@ export default function TaskCard({
         <div className="flex items-center gap-3">
           <button
             onClick={() => onComplete(id)}
-            className="w-5 h-5 rounded-full border-2 border-zinc-500 hover:border-green-400 flex-shrink-0 transition-colors"
+            className="w-4 h-4 rounded-full border border-[var(--border-secondary)] hover:border-[var(--status-green)] flex-shrink-0 transition-all duration-150 hover:bg-[var(--status-green)]/10"
+            aria-label="Complete task"
           />
           <div
             className="flex-1 min-w-0 cursor-pointer"
@@ -86,28 +87,38 @@ export default function TaskCard({
             {...attributes}
             {...listeners}
           >
-            <p className="text-sm text-zinc-100 truncate">{title}</p>
+            <p className="text-small-medium text-[var(--text-primary)] truncate">{title}</p>
             {note && !expanded && (
-              <p className="text-[10px] text-zinc-500 mt-0.5">📝 Note</p>
+              <p className="text-label text-[var(--text-quaternary)] mt-0.5">Note attached</p>
             )}
           </div>
-          <div className="text-zinc-600 cursor-grab" {...attributes} {...listeners}>
-            ⠿
+          <div 
+            className="text-[var(--text-quaternary)] cursor-grab hover:text-[var(--text-tertiary)] transition-colors text-sm" 
+            {...attributes} 
+            {...listeners}
+          >
+            ⋮⋮
           </div>
         </div>
 
         {expanded && (
-          <div className="mt-3 pt-3 border-t border-zinc-700">
+          <div className="mt-3 pt-3 border-t border-[var(--border-subtle)] animate-in fade-in duration-150">
             <textarea
               value={editNote}
               onChange={(e) => setEditNote(e.target.value)}
               placeholder="Add a note..."
-              className="w-full bg-zinc-900 text-sm text-zinc-300 rounded p-2 resize-none h-20 border border-zinc-700 focus:border-zinc-500 focus:outline-none"
+              className="w-full bg-[var(--bg-panel)] text-caption text-[var(--text-secondary)] rounded-[var(--radius-sm)] p-2 resize-none h-20 border border-[var(--border-standard)] focus:border-[var(--border-secondary)] focus:outline-none transition-colors"
             />
-            <div className="flex justify-end mt-2">
+            <div className="flex justify-end gap-2 mt-2">
+              <button
+                onClick={() => setExpanded(false)}
+                className="text-label text-[var(--text-tertiary)] hover:text-[var(--text-secondary)] px-3 py-1.5 rounded-[var(--radius-sm)] transition-colors"
+              >
+                Cancel
+              </button>
               <button
                 onClick={handleNoteSave}
-                className="text-xs bg-zinc-700 hover:bg-zinc-600 px-3 py-1 rounded transition-colors"
+                className="btn-ghost text-label px-3 py-1.5"
               >
                 Save
               </button>
@@ -117,8 +128,8 @@ export default function TaskCard({
       </div>
 
       {swipeX > 40 && (
-        <div className="absolute left-2 top-1/2 -translate-y-1/2 text-green-400 text-sm font-medium">
-          ✓ Done
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--status-green)] text-small-medium flex items-center gap-1">
+          <span className="text-lg">✓</span> Done
         </div>
       )}
     </div>

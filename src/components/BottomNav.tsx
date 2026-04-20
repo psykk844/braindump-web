@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api-client";
 
 const tabs = [
-  { href: "/", label: "Board", icon: "✅", activeIcon: "✅" },
-  { href: "/inbox", label: "Inbox", icon: "📥", activeIcon: "📥" },
-  { href: "/browse", label: "Browse", icon: "🔍", activeIcon: "🔍" },
+  { href: "/", label: "Board", icon: "✓" },
+  { href: "/inbox", label: "Inbox", icon: "↓" },
+  { href: "/browse", label: "Browse", icon: "◎" },
 ];
 
 export default function BottomNav() {
@@ -21,7 +21,6 @@ export default function BottomNav() {
       .then((data) => setInboxCount(Array.isArray(data) ? data.length : 0))
       .catch(() => {});
 
-    // Listen for SSE updates
     const es = new EventSource("/api/events");
     es.addEventListener("new-item", () => {
       setInboxCount((c) => c + 1);
@@ -30,8 +29,8 @@ export default function BottomNav() {
   }, []);
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-zinc-900 border-t border-zinc-800 z-50">
-      <div className="flex justify-around items-center h-16 max-w-lg mx-auto">
+    <nav className="fixed bottom-0 left-0 right-0 backdrop-blur-xl bg-[var(--bg-panel)]/80 border-t border-[var(--border-standard)] z-50">
+      <div className="flex justify-around items-center h-14 max-w-2xl mx-auto">
         {tabs.map((tab) => {
           const isActive =
             tab.href === "/" ? pathname === "/" : pathname.startsWith(tab.href);
@@ -39,19 +38,21 @@ export default function BottomNav() {
             <Link
               key={tab.href}
               href={tab.href}
-              className={`flex flex-col items-center justify-center w-full h-full transition-colors ${
-                isActive ? "text-white" : "text-zinc-500"
+              className={`flex flex-col items-center justify-center w-full h-full transition-all duration-150 ${
+                isActive 
+                  ? "text-[var(--text-primary)]" 
+                  : "text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
               }`}
             >
-              <span className="text-xl relative">
+              <span className="text-lg relative font-medium">
                 {tab.icon}
                 {tab.label === "Inbox" && inboxCount > 0 && (
-                  <span className="absolute -top-2 -right-3 bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                    {inboxCount > 99 ? "99+" : inboxCount}
+                  <span className="absolute -top-1 -right-2 bg-[var(--accent-violet)] text-white text-[9px] font-bold rounded-full min-w-[16px] h-4 px-1 flex items-center justify-center">
+                    {inboxCount > 99 ? "99" : inboxCount}
                   </span>
                 )}
               </span>
-              <span className="text-[10px] mt-1 font-medium">{tab.label}</span>
+              <span className="text-label mt-0.5">{tab.label}</span>
             </Link>
           );
         })}

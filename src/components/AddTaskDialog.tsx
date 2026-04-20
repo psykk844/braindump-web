@@ -19,33 +19,34 @@ export default function AddTaskDialog({ onAdd, onClose }: AddTaskDialogProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center">
-      <div className="bg-zinc-900 rounded-t-2xl sm:rounded-2xl w-full max-w-lg p-6 border border-zinc-800">
-        <h2 className="text-lg font-semibold mb-4">Add Task</h2>
+    <div className="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center animate-in fade-in duration-150">
+      <div className="bg-[var(--bg-panel)] rounded-t-2xl sm:rounded-xl w-full max-w-lg p-6 border border-[var(--border-standard)] animate-in slide-in-from-bottom duration-200 sm:slide-in-from-bottom-0">
+        <h2 className="text-heading-3 text-[var(--text-primary)] mb-4">Add Task</h2>
         <form onSubmit={handleSubmit}>
           <input
             autoFocus
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="What needs to be done?"
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-sm focus:border-zinc-500 focus:outline-none mb-3"
+            className="w-full bg-[var(--bg-surface)] border border-[var(--border-standard)] rounded-[var(--radius-sm)] p-3 text-small-medium text-[var(--text-primary)] placeholder:text-[var(--text-quaternary)] focus:border-[var(--border-secondary)] focus:outline-none mb-4 transition-colors"
           />
           <div className="flex gap-2 mb-4">
             {[
-              { key: "top5", label: "🔥 Top 5" },
-              { key: "next", label: "⏳ Next" },
-              { key: "later", label: "🧊 Later" },
+              { key: "top5", label: "Top 5", icon: "●" },
+              { key: "next", label: "Next", icon: "○" },
+              { key: "later", label: "Later", icon: "◌" },
             ].map((b) => (
               <button
                 type="button"
                 key={b.key}
                 onClick={() => setBucket(b.key)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                className={`flex-1 px-3 py-2 rounded-[var(--radius-sm)] text-label transition-all duration-150 ${
                   bucket === b.key
-                    ? "bg-white text-zinc-900"
-                    : "bg-zinc-800 text-zinc-400"
+                    ? "bg-[var(--accent-violet)] text-white"
+                    : "btn-ghost"
                 }`}
               >
+                <span className="mr-1">{b.icon}</span>
                 {b.label}
               </button>
             ))}
@@ -54,13 +55,13 @@ export default function AddTaskDialog({ onAdd, onClose }: AddTaskDialogProps) {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-2.5 rounded-lg bg-zinc-800 text-sm text-zinc-400 hover:bg-zinc-700 transition-colors"
+              className="flex-1 py-2.5 btn-ghost text-small-medium"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 py-2.5 rounded-lg bg-white text-zinc-900 text-sm font-medium hover:bg-zinc-200 transition-colors"
+              className="flex-1 py-2.5 btn-primary text-small-medium"
             >
               Add
             </button>

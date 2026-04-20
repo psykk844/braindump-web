@@ -3,17 +3,167 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Linear Design Tokens - Backgrounds */
+    --bg-marketing: #08090a;
+    --bg-panel: #0f1011;
+    --bg-surface: #191a1b;
+    --bg-surface-secondary: #28282c;
+    
+    /* Text */
+    --text-primary: #f7f8f8;
+    --text-secondary: #d0d6e0;
+    --text-tertiary: #8a8f98;
+    --text-quaternary: #62666d;
+    
+    /* Brand & Accent */
+    --brand-indigo: #5e6ad2;
+    --accent-violet: #7170ff;
+    --accent-hover: #828fff;
+    
+    /* Status */
+    --status-green: #27a644;
+    --status-emerald: #10b981;
+    
+    /* Borders */
+    --border-primary: #23252a;
+    --border-secondary: #34343a;
+    --border-subtle: rgba(255, 255, 255, 0.05);
+    --border-standard: rgba(255, 255, 255, 0.08);
+    
+    /* Spacing */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    
+    /* Radius */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-full: 9999px;
+  }
+
   * {
     -webkit-tap-highlight-color: transparent;
   }
 
   body {
     overscroll-behavior: none;
+    font-feature-settings: "cv01", "ss03";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Smooth touch scrolling */
   .scroll-container {
     -webkit-overflow-scrolling: touch;
     overflow-y: auto;
+  }
+}
+
+@layer utilities {
+  /* Linear Typography Utilities */
+  .text-display {
+    font-size: 3rem;
+    font-weight: 510;
+    line-height: 1;
+    letter-spacing: -1.056px;
+  }
+  
+  .text-heading-1 {
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.13;
+    letter-spacing: -0.704px;
+  }
+  
+  .text-heading-2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.33;
+    letter-spacing: -0.288px;
+  }
+  
+  .text-heading-3 {
+    font-size: 1.25rem;
+    font-weight: 590;
+    line-height: 1.33;
+    letter-spacing: -0.24px;
+  }
+  
+  .text-body-medium {
+    font-size: 1rem;
+    font-weight: 510;
+    line-height: 1.5;
+  }
+  
+  .text-small-medium {
+    font-size: 0.9375rem;
+    font-weight: 510;
+    line-height: 1.6;
+    letter-spacing: -0.165px;
+  }
+  
+  .text-caption {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.13px;
+  }
+  
+  .text-label {
+    font-size: 0.75rem;
+    font-weight: 510;
+    line-height: 1.4;
+  }
+
+  /* Linear Card Treatment */
+  .card-linear {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-standard);
+    border-radius: var(--radius-md);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .card-linear:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  /* Linear Button Treatment */
+  .btn-ghost {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+  }
+  
+  .btn-primary {
+    background: var(--brand-indigo);
+    color: white;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .btn-primary:hover {
+    background: var(--accent-hover);
+  }
+
+  /* Atmospheric Background */
+  .bg-atmospheric {
+    background: 
+      radial-gradient(circle at 20% 10%, rgba(94, 106, 210, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(113, 112, 255, 0.06) 0%, transparent 50%),
+      var(--bg-marketing);
   }
 }

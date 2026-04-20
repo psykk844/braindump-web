@@ -14,9 +14,9 @@ interface InboxCardProps {
 }
 
 const TYPE_BADGES: Record<string, { label: string; color: string }> = {
-  link: { label: "🔗 Link", color: "bg-blue-500/20 text-blue-400" },
-  idea: { label: "💡 Idea", color: "bg-yellow-500/20 text-yellow-400" },
-  todo: { label: "✅ Todo", color: "bg-green-500/20 text-green-400" },
+  link: { label: "Link", color: "bg-blue-500/10 text-blue-400 border-blue-500/20" },
+  idea: { label: "Idea", color: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" },
+  todo: { label: "Todo", color: "bg-[var(--status-green)]/10 text-[var(--status-green)] border-[var(--status-green)]/20" },
 };
 
 export default function InboxCard({
@@ -58,41 +58,40 @@ export default function InboxCard({
   }
 
   return (
-    <div className="relative mb-3 overflow-hidden rounded-lg">
-      {/* Swipe indicators */}
+    <div className="relative mb-3 overflow-hidden rounded-[var(--radius-md)]">
       {swipeX > 40 && (
-        <div className="absolute left-2 top-1/2 -translate-y-1/2 text-green-400 text-sm font-medium z-10">
-          → Task
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--status-green)] text-small-medium z-10 flex items-center gap-1">
+          <span className="text-lg">→</span> Task
         </div>
       )}
       {swipeX < -40 && (
-        <div className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 text-sm font-medium z-10">
-          Archive ←
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-quaternary)] text-small-medium z-10 flex items-center gap-1">
+          Archive <span className="text-lg">←</span>
         </div>
       )}
 
       <div
-        className="bg-zinc-800 border border-zinc-700 rounded-lg p-3 transition-transform"
+        className="card-linear p-4 transition-all duration-150"
         style={{ transform: `translateX(${swipeX}px)` }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="flex items-start gap-2 mb-2">
+        <div className="flex items-start gap-2 mb-3">
           <button
             onClick={cycleType}
-            className={`px-2 py-0.5 rounded text-[10px] font-medium ${badge.color}`}
+            className={`px-2 py-1 rounded-[var(--radius-sm)] text-label border transition-colors ${badge.color}`}
           >
             {badge.label}
           </button>
           {category !== "uncategorized" && (
-            <span className="px-2 py-0.5 rounded text-[10px] bg-zinc-700 text-zinc-400">
+            <span className="px-2 py-1 rounded-[var(--radius-sm)] text-label bg-[var(--bg-surface)] text-[var(--text-quaternary)] border border-[var(--border-subtle)]">
               {category}
             </span>
           )}
         </div>
 
-        <p className="text-sm text-zinc-200 mb-3 whitespace-pre-wrap break-words">
+        <p className="text-small-medium text-[var(--text-primary)] mb-3 whitespace-pre-wrap break-words leading-relaxed">
           {rawText}
         </p>
 
@@ -101,7 +100,7 @@ export default function InboxCard({
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-blue-400 hover:underline block mb-3 truncate"
+            className="text-caption text-[var(--accent-violet)] hover:text-[var(--accent-hover)] block mb-3 truncate transition-colors"
           >
             {url}
           </a>
@@ -110,13 +109,13 @@ export default function InboxCard({
         <div className="flex gap-2">
           <button
             onClick={() => onPromoteToTask(id)}
-            className="flex-1 py-1.5 rounded bg-green-500/20 text-green-400 text-xs font-medium hover:bg-green-500/30 transition-colors"
+            className="flex-1 py-2 rounded-[var(--radius-sm)] bg-[var(--status-green)]/10 text-[var(--status-green)] text-label border border-[var(--status-green)]/20 hover:bg-[var(--status-green)]/20 transition-all duration-150"
           >
             → Task
           </button>
           <button
             onClick={() => onArchive(id)}
-            className="flex-1 py-1.5 rounded bg-zinc-700 text-zinc-400 text-xs font-medium hover:bg-zinc-600 transition-colors"
+            className="flex-1 py-2 btn-ghost text-label"
           >
             Archive
           </button>

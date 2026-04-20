@@ -132,8 +132,13 @@ export default function BoardPage() {
   }
 
   return (
-    <div className="pt-6">
-      <h1 className="text-xl font-bold mb-4">🧠 BrainDump</h1>
+    <div className="pt-8 pb-4">
+      <div className="mb-8">
+        <h1 className="text-heading-2 text-[var(--text-primary)] mb-1">Board</h1>
+        <p className="text-caption text-[var(--text-tertiary)]">
+          Focus on what matters most
+        </p>
+      </div>
 
       <DndContext
         sensors={sensors}
@@ -143,7 +148,7 @@ export default function BoardPage() {
         <BucketList
           bucket="top5"
           label="Top 5"
-          icon="🔥"
+          icon="●"
           tasks={bucketTasks("top5")}
           defaultExpanded={true}
           onComplete={handleComplete}
@@ -152,7 +157,7 @@ export default function BoardPage() {
         <BucketList
           bucket="next"
           label="Next"
-          icon="⏳"
+          icon="○"
           tasks={bucketTasks("next")}
           defaultExpanded={false}
           onComplete={handleComplete}
@@ -161,7 +166,7 @@ export default function BoardPage() {
         <BucketList
           bucket="later"
           label="Later"
-          icon="🧊"
+          icon="◌"
           tasks={bucketTasks("later")}
           defaultExpanded={false}
           onComplete={handleComplete}
@@ -169,10 +174,10 @@ export default function BoardPage() {
         />
       </DndContext>
 
-      {/* Floating add button */}
       <button
         onClick={() => setShowAdd(true)}
-        className="fixed bottom-20 right-4 w-14 h-14 rounded-full bg-white text-zinc-900 text-2xl font-bold shadow-lg hover:bg-zinc-200 transition-colors z-40"
+        className="fixed bottom-20 right-4 w-12 h-12 rounded-full bg-[var(--accent-violet)] hover:bg-[var(--accent-hover)] text-white text-xl font-medium shadow-lg transition-all duration-150 z-40 flex items-center justify-center"
+        aria-label="Add task"
       >
         +
       </button>

@@ -70,16 +70,18 @@ export default function InboxPage() {
   }
 
   return (
-    <div className="pt-6">
-      <h1 className="text-xl font-bold mb-4">📥 Inbox</h1>
-      <p className="text-sm text-zinc-500 mb-4">
-        Swipe right to create task • Swipe left to archive
-      </p>
+    <div className="pt-8 pb-4">
+      <div className="mb-8">
+        <h1 className="text-heading-2 text-[var(--text-primary)] mb-1">Inbox</h1>
+        <p className="text-caption text-[var(--text-tertiary)]">
+          Swipe right to create task • Swipe left to archive
+        </p>
+      </div>
 
       {items.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-zinc-600 text-sm">No items in inbox</p>
-          <p className="text-zinc-700 text-xs mt-2">
+        <div className="text-center py-16">
+          <p className="text-small-medium text-[var(--text-quaternary)]">No items in inbox</p>
+          <p className="text-caption text-[var(--text-quaternary)] mt-2 opacity-60">
             Send a message to your Telegram bot to capture ideas
           </p>
         </div>
