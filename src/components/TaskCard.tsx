@@ -84,8 +84,6 @@ export default function TaskCard({
           <div
             className="flex-1 min-w-0 cursor-pointer"
             onClick={() => setExpanded(!expanded)}
-            {...attributes}
-            {...listeners}
           >
             <p className="text-body text-[var(--text-primary)] leading-relaxed">{title}</p>
             {note && !expanded && (
@@ -93,9 +91,10 @@ export default function TaskCard({
             )}
           </div>
           <div 
-            className="text-[var(--text-quaternary)] cursor-grab hover:text-[var(--text-tertiary)] transition-colors text-lg" 
+            className="text-[var(--text-quaternary)] cursor-grab active:cursor-grabbing hover:text-[var(--text-secondary)] transition-colors text-2xl px-2 select-none" 
             {...attributes} 
             {...listeners}
+            title="Drag to reorder"
           >
             ⋮⋮
           </div>
