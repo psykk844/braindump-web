@@ -42,20 +42,20 @@ export default function BucketList({
     <div className="mb-6">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex items-center gap-3 w-full text-left py-2 group"
+        className="flex items-center gap-3 w-full text-left py-3 px-1 group hover:bg-[var(--bg-surface)]/50 rounded-[var(--radius-sm)] transition-colors"
       >
-        <span className="text-lg">{icon}</span>
-        <span className="text-body-medium text-[var(--text-primary)]">{label}</span>
-        <span className="text-label text-[var(--text-quaternary)] bg-[var(--bg-surface)] px-2 py-0.5 rounded-full">
+        <span className="text-xl text-[var(--text-secondary)]">{icon}</span>
+        <span className="text-body-medium text-[var(--text-primary)] font-medium tracking-tight">{label}</span>
+        <span className="text-label text-[var(--text-tertiary)] bg-[var(--bg-surface-secondary)] px-2.5 py-0.5 rounded-full font-medium">
           {tasks.length}
         </span>
-        <span className="ml-auto text-[var(--text-quaternary)] group-hover:text-[var(--text-tertiary)] transition-colors text-xs">
+        <span className="ml-auto text-[var(--text-tertiary)] group-hover:text-[var(--text-secondary)] transition-colors text-base font-light">
           {expanded ? "−" : "+"}
         </span>
       </button>
 
       {expanded && (
-        <div ref={setNodeRef} className="min-h-[20px] mt-2">
+        <div ref={setNodeRef} className="min-h-[20px] mt-3 pl-1">
           <SortableContext
             items={tasks.map((t) => t.id)}
             strategy={verticalListSortingStrategy}
@@ -73,7 +73,7 @@ export default function BucketList({
             ))}
           </SortableContext>
           {tasks.length === 0 && (
-            <p className="text-caption text-[var(--text-quaternary)] py-6 text-center">
+            <p className="text-caption text-[var(--text-tertiary)] py-8 text-center">
               No tasks
             </p>
           )}

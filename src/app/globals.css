@@ -5,16 +5,16 @@
 @layer base {
   :root {
     /* Linear Design Tokens - Backgrounds */
-    --bg-marketing: #08090a;
-    --bg-panel: #0f1011;
-    --bg-surface: #191a1b;
-    --bg-surface-secondary: #28282c;
+    --bg-marketing: #0a0b0d;
+    --bg-panel: #13141a;
+    --bg-surface: #1c1d24;
+    --bg-surface-secondary: #2a2b33;
     
-    /* Text */
-    --text-primary: #f7f8f8;
-    --text-secondary: #d0d6e0;
-    --text-tertiary: #8a8f98;
-    --text-quaternary: #62666d;
+    /* Text - Improved Contrast */
+    --text-primary: #ffffff;
+    --text-secondary: #e4e6eb;
+    --text-tertiary: #a0a4b8;
+    --text-quaternary: #6b7280;
     
     /* Brand & Accent */
     --brand-indigo: #5e6ad2;
@@ -26,10 +26,10 @@
     --status-emerald: #10b981;
     
     /* Borders */
-    --border-primary: #23252a;
-    --border-secondary: #34343a;
-    --border-subtle: rgba(255, 255, 255, 0.05);
-    --border-standard: rgba(255, 255, 255, 0.08);
+    --border-primary: #2a2d35;
+    --border-secondary: #3d4049;
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --border-standard: rgba(255, 255, 255, 0.12);
     
     /* Spacing */
     --space-1: 4px;
@@ -123,15 +123,15 @@
 
   /* Linear Card Treatment */
   .card-linear {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border-standard);
     border-radius: var(--radius-md);
     transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .card-linear:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.16);
   }
 
   /* Linear Button Treatment */

@@ -133,8 +133,8 @@ export default function BoardPage() {
 
   return (
     <div className="pt-8 pb-4">
-      <div className="mb-8">
-        <h1 className="text-heading-2 text-[var(--text-primary)] mb-1">Board</h1>
+      <div className="mb-10">
+        <h1 className="text-heading-2 text-[var(--text-primary)] mb-2 font-medium tracking-tight">Board</h1>
         <p className="text-caption text-[var(--text-tertiary)]">
           Focus on what matters most
         </p>

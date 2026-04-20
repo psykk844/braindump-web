@@ -87,9 +87,9 @@ export default function TaskCard({
             {...attributes}
             {...listeners}
           >
-            <p className="text-small-medium text-[var(--text-primary)] truncate">{title}</p>
+            <p className="text-small-medium text-[var(--text-primary)] leading-snug">{title}</p>
             {note && !expanded && (
-              <p className="text-label text-[var(--text-quaternary)] mt-0.5">Note attached</p>
+              <p className="text-label text-[var(--text-tertiary)] mt-1">Note attached</p>
             )}
           </div>
           <div 
