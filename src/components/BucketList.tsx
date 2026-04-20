@@ -39,23 +39,21 @@ export default function BucketList({
   const { setNodeRef } = useDroppable({ id: bucket });
 
   return (
-    <div className="mb-6 bg-white rounded-lg shadow-sm border border-[var(--border-light)] overflow-hidden">
+    <div className="mb-4">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex items-center gap-4 w-full text-left py-4 px-5 group hover:bg-[var(--bg-secondary)] transition-all"
+        className="flex items-center gap-2 w-full text-left py-2 px-3 hover:bg-[var(--bg-secondary)] transition-colors"
       >
-        <span className="text-2xl">{icon}</span>
-        <span className="text-heading-2 text-[var(--text-primary)] flex-1">{label}</span>
-        <span className="text-small text-[var(--text-tertiary)] bg-[var(--bg-tertiary)] px-3 py-1 rounded-full font-medium min-w-[32px] text-center">
-          {tasks.length}
-        </span>
-        <span className="text-[var(--text-tertiary)] group-hover:text-[var(--text-secondary)] transition-colors text-2xl">
+        <span className="text-body">{icon}</span>
+        <span className="text-heading text-[var(--text-primary)] flex-1">{label}</span>
+        <span className="text-tiny text-[var(--text-muted)]">({tasks.length})</span>
+        <span className="text-tiny text-[var(--text-tertiary)]">
           {expanded ? "−" : "+"}
         </span>
       </button>
 
       {expanded && (
-        <div ref={setNodeRef} className="min-h-[20px] px-5 pb-4 space-y-3 bg-[var(--bg-secondary)]">
+        <div ref={setNodeRef} className="border-t border-[var(--border)]">
           <SortableContext
             items={tasks.map((t) => t.id)}
             strategy={verticalListSortingStrategy}
@@ -73,8 +71,8 @@ export default function BucketList({
             ))}
           </SortableContext>
           {tasks.length === 0 && (
-            <p className="text-small text-[var(--text-tertiary)] py-8 text-center">
-              No tasks yet
+            <p className="text-small text-[var(--text-muted)] py-4 px-3 text-center">
+              No tasks
             </p>
           )}
         </div>

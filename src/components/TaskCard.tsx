@@ -65,70 +65,68 @@ export default function TaskCard({
   }
 
   return (
-    <div ref={setNodeRef} style={style} className="relative group">
+    <div ref={setNodeRef} style={style} className="task-item">
+      {swipeX > 40 && (
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--accent-green)] text-body flex items-center gap-1">
+          <span>✓</span> Done
+        </div>
+      )}
+      
       <div
-        className={`card-task p-4 transition-all duration-150 ${
-          swipeX > 0 ? "border-[var(--success)]" : ""
-        }`}
+        className="flex items-center gap-2 py-2 px-3"
         style={{ transform: `translateX(${swipeX}px)` }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="flex items-start gap-3">
-          <button
-            onClick={() => onComplete(id)}
-            className="w-5 h-5 mt-0.5 rounded-full border-2 border-[var(--border-dark)] hover:border-[var(--success)] flex-shrink-0 transition-all duration-150 hover:bg-[var(--success-light)]"
-            aria-label="Complete task"
-          />
-          <div
-            className="flex-1 min-w-0 cursor-pointer"
-            onClick={() => setExpanded(!expanded)}
-          >
-            <p className="text-body text-[var(--text-primary)] leading-relaxed">{title}</p>
-            {note && !expanded && (
-              <p className="text-small text-[var(--text-tertiary)] mt-1">📝 Note attached</p>
-            )}
-          </div>
-          <div 
-            className="text-[var(--text-quaternary)] cursor-grab active:cursor-grabbing hover:text-[var(--text-secondary)] transition-colors text-2xl px-2 select-none" 
-            {...attributes} 
-            {...listeners}
-            title="Drag to reorder"
-          >
-            ⋮⋮
-          </div>
+        <button
+          onClick={() => onComplete(id)}
+          className="text-body text-[var(--text-tertiary)] hover:text-[var(--accent-green)] transition-colors"
+          aria-label="Complete task"
+        >
+          [ ]
+        </button>
+        <div
+          className="flex-1 min-w-0 cursor-pointer"
+          onClick={() => setExpanded(!expanded)}
+        >
+          <p className="text-body text-[var(--text-primary)] truncate">{title}</p>
         </div>
-
-        {expanded && (
-          <div className="mt-4 pt-4 border-t border-[var(--border-light)] animate-in fade-in duration-150">
-            <textarea
-              value={editNote}
-              onChange={(e) => setEditNote(e.target.value)}
-              placeholder="Add a note..."
-              className="w-full bg-[var(--bg-secondary)] text-small text-[var(--text-primary)] rounded-[var(--radius-md)] p-3 resize-none h-24 border border-[var(--border-medium)] focus:border-[var(--accent-primary)] focus:outline-none transition-colors"
-            />
-            <div className="flex justify-end gap-2 mt-3">
-              <button
-                onClick={() => setExpanded(false)}
-                className="text-small text-[var(--text-secondary)] hover:text-[var(--text-primary)] px-4 py-2 rounded-[var(--radius-md)] transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleNoteSave}
-                className="btn-primary text-small px-4 py-2"
-              >
-                Save
-              </button>
-            </div>
-          </div>
+        {note && !expanded && (
+          <span className="text-tiny text-[var(--text-muted)]">📝</span>
         )}
+        <div 
+          className="text-body text-[var(--text-muted)] cursor-grab active:cursor-grabbing hover:text-[var(--text-tertiary)] transition-colors select-none px-1" 
+          {...attributes} 
+          {...listeners}
+          title="Drag to reorder"
+        >
+          ⋮
+        </div>
       </div>
 
-      {swipeX > 40 && (
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--success)] text-body-medium flex items-center gap-2 font-medium">
-          <span className="text-xl">✓</span> Done
+      {expanded && (
+        <div className="px-3 pb-2 border-t border-[var(--border)]">
+          <textarea
+            value={editNote}
+            onChange={(e) => setEditNote(e.target.value)}
+            placeholder="Add a note..."
+            className="w-full bg-[var(--bg-secondary)] text-small text-[var(--text-primary)] p-2 resize-none h-20 border border-[var(--border)] focus:border-[var(--accent-blue)] focus:outline-none transition-colors mt-2"
+          />
+          <div className="flex justify-end gap-2 mt-2">
+            <button
+              onClick={() => setExpanded(false)}
+              className="text-tiny text-[var(--text-tertiary)] hover:text-[var(--text-primary)] px-2 py-1 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleNoteSave}
+              className="btn btn-primary text-tiny"
+            >
+              Save
+            </button>
+          </div>
         </div>
       )}
     </div>
