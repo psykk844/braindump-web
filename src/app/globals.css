@@ -4,32 +4,32 @@
 
 @layer base {
   :root {
-    /* Linear Design Tokens - Backgrounds */
-    --bg-marketing: #0a0b0d;
-    --bg-panel: #13141a;
-    --bg-surface: #1c1d24;
-    --bg-surface-secondary: #2a2b33;
+    /* Light Theme - High Contrast */
+    --bg-marketing: #ffffff;
+    --bg-panel: #f8f9fa;
+    --bg-surface: #f1f3f5;
+    --bg-surface-secondary: #e9ecef;
     
-    /* Text - Improved Contrast */
-    --text-primary: #ffffff;
-    --text-secondary: #e4e6eb;
-    --text-tertiary: #a0a4b8;
-    --text-quaternary: #6b7280;
+    /* Text - Dark on Light */
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --text-tertiary: #6b7280;
+    --text-quaternary: #9ca3af;
     
     /* Brand & Accent */
     --brand-indigo: #5e6ad2;
     --accent-violet: #7170ff;
-    --accent-hover: #828fff;
+    --accent-hover: #5b5ce6;
     
     /* Status */
     --status-green: #27a644;
     --status-emerald: #10b981;
     
     /* Borders */
-    --border-primary: #2a2d35;
-    --border-secondary: #3d4049;
-    --border-subtle: rgba(255, 255, 255, 0.06);
-    --border-standard: rgba(255, 255, 255, 0.12);
+    --border-primary: #e5e7eb;
+    --border-secondary: #d1d5db;
+    --border-subtle: rgba(0, 0, 0, 0.06);
+    --border-standard: rgba(0, 0, 0, 0.12);
     
     /* Spacing */
     --space-1: 4px;
@@ -123,20 +123,22 @@
 
   /* Linear Card Treatment */
   .card-linear {
-    background: rgba(255, 255, 255, 0.03);
+    background: #ffffff;
     border: 1px solid var(--border-standard);
     border-radius: var(--radius-md);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .card-linear:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.16);
+    background: #ffffff;
+    border-color: var(--border-secondary);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   }
 
   /* Linear Button Treatment */
   .btn-ghost {
-    background: rgba(255, 255, 255, 0.02);
+    background: #ffffff;
     border: 1px solid var(--border-primary);
     border-radius: var(--radius-sm);
     color: var(--text-secondary);
@@ -144,8 +146,9 @@
   }
   
   .btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--bg-surface);
     color: var(--text-primary);
+    border-color: var(--border-secondary);
   }
   
   .btn-primary {
@@ -162,8 +165,8 @@
   /* Atmospheric Background */
   .bg-atmospheric {
     background: 
-      radial-gradient(circle at 20% 10%, rgba(94, 106, 210, 0.08) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(113, 112, 255, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 20% 10%, rgba(94, 106, 210, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(113, 112, 255, 0.02) 0%, transparent 50%),
       var(--bg-marketing);
   }
 }
