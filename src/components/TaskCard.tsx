@@ -48,13 +48,11 @@ export default function TaskCard({
   function handleTouchMove(e: React.TouchEvent) {
     if (touchStart === null) return;
     const diff = e.touches[0].clientX - touchStart;
-    if (diff > 0) setSwipeX(Math.min(diff, 100));
+    if (diff > 0) setSwipeX(Math.min(diff, 96));
   }
 
   function handleTouchEnd() {
-    if (swipeX > 80) {
-      onComplete(id);
-    }
+    if (swipeX > 72) onComplete(id);
     setSwipeX(0);
     setTouchStart(null);
   }
@@ -65,15 +63,15 @@ export default function TaskCard({
   }
 
   return (
-    <div ref={setNodeRef} style={style} className="task-item">
-      {swipeX > 40 && (
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--accent-green)] text-body flex items-center gap-1">
-          <span>✓</span> Done
+    <div ref={setNodeRef} style={style} className="task-item relative">
+      {swipeX > 36 && (
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--accent-success)] text-small">
+          [x] done
         </div>
       )}
-      
+
       <div
-        className="flex items-center gap-2 py-2 px-3"
+        className="flex items-center gap-2 px-3 py-2"
         style={{ transform: `translateX(${swipeX}px)` }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -81,51 +79,45 @@ export default function TaskCard({
       >
         <button
           onClick={() => onComplete(id)}
-          className="text-body text-[var(--text-tertiary)] hover:text-[var(--accent-green)] transition-colors"
+          className="text-small text-[var(--text-dim)] hover:text-[var(--accent-success)]"
           aria-label="Complete task"
         >
           [ ]
         </button>
-        <div
-          className="flex-1 min-w-0 cursor-pointer"
+
+        <span className="text-small text-[var(--text-muted)] w-10">#{id}</span>
+
+        <button
+          className="flex-1 min-w-0 text-left"
           onClick={() => setExpanded(!expanded)}
+          aria-label="Toggle task details"
         >
-          <p className="text-body text-[var(--text-primary)] truncate">{title}</p>
-        </div>
-        {note && !expanded && (
-          <span className="text-tiny text-[var(--text-muted)]">📝</span>
-        )}
-        <div 
-          className="text-body text-[var(--text-muted)] cursor-grab active:cursor-grabbing hover:text-[var(--text-tertiary)] transition-colors select-none px-1" 
-          {...attributes} 
+          <p className="text-body text-[var(--text)] truncate">{title}</p>
+        </button>
+
+        {note ? <span className="text-small text-[var(--text-muted)]">[note]</span> : null}
+        <span className="text-small text-[var(--text-muted)]">@{bucket}</span>
+        <span
+          className="text-small text-[var(--text-muted)] cursor-grab active:cursor-grabbing select-none px-1"
+          {...attributes}
           {...listeners}
           title="Drag to reorder"
         >
-          ⋮
-        </div>
+          ::
+        </span>
       </div>
 
       {expanded && (
-        <div className="px-3 pb-2 border-t border-[var(--border)]">
+        <div className="px-3 pb-2 border-t border-[var(--border)] bg-[var(--bg-muted)]">
           <textarea
             value={editNote}
             onChange={(e) => setEditNote(e.target.value)}
-            placeholder="Add a note..."
-            className="w-full bg-[var(--bg-secondary)] text-small text-[var(--text-primary)] p-2 resize-none h-20 border border-[var(--border)] focus:border-[var(--accent-blue)] focus:outline-none transition-colors mt-2"
+            placeholder="task note"
+            className="w-full bg-[var(--bg)] text-small text-[var(--text)] p-2 resize-none h-20 border border-[var(--border)] focus:border-[var(--accent)] focus:outline-none mt-2"
           />
           <div className="flex justify-end gap-2 mt-2">
-            <button
-              onClick={() => setExpanded(false)}
-              className="text-tiny text-[var(--text-tertiary)] hover:text-[var(--text-primary)] px-2 py-1 transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleNoteSave}
-              className="btn btn-primary text-tiny"
-            >
-              Save
-            </button>
+            <button onClick={() => setExpanded(false)} className="btn">[esc] cancel</button>
+            <button onClick={handleNoteSave} className="btn btn-primary">[enter] save</button>
           </div>
         </div>
       )}

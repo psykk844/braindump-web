@@ -57,7 +57,6 @@ export default function BoardPage() {
   }
 
   async function handleComplete(id: number) {
-    // Optimistic update
     setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, bucket: "done" } : t)));
     await apiFetch(`/api/tasks/${id}`, {
       method: "PATCH",
@@ -80,7 +79,6 @@ export default function BoardPage() {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    // Find which bucket the task is in
     const task = tasks.find((t) => t.id === active.id);
     if (!task) return;
 
@@ -90,7 +88,6 @@ export default function BoardPage() {
     const newIndex = bucketItems.findIndex((t) => t.id === over.id);
 
     if (oldIndex === -1 || newIndex === -1) {
-      // Cross-bucket drop — check if over.id is a bucket ID
       const targetBucket = String(over.id);
       if (["top5", "next", "later"].includes(targetBucket)) {
         await apiFetch(`/api/tasks/${active.id}`, {
@@ -106,7 +103,6 @@ export default function BoardPage() {
     const reordered = arrayMove(bucketItems, oldIndex, newIndex);
     const reorderedIds = reordered.map((t) => t.id);
 
-    // Optimistic
     const newTasks = tasks.map((t) => {
       const idx = reorderedIds.indexOf(t.id);
       if (idx !== -1) return { ...t, order: idx + 1 };
@@ -132,64 +128,62 @@ export default function BoardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--bg-secondary)]">
-      <div className="max-w-2xl mx-auto px-4 pt-6 pb-24">
-        <div className="mb-8">
-          <h1 className="text-heading-1 text-[var(--text-primary)] mb-2">Board</h1>
-          <p className="text-small text-[var(--text-tertiary)]">
-            Focus on what matters most
-          </p>
-        </div>
+    <div className="terminal-shell pb-6">
+      <header className="terminal-header">
+        <div className="text-small text-[var(--text-dim)]">taskbook-web</div>
+        <h1 className="text-body text-[var(--text)]">board</h1>
+      </header>
 
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
-          <BucketList
-            bucket="top5"
-            label="Top 5"
-            icon="●"
-            tasks={bucketTasks("top5")}
-            defaultExpanded={true}
-            onComplete={handleComplete}
-            onUpdateNote={handleUpdateNote}
-          />
-          <BucketList
-            bucket="next"
-            label="Next"
-            icon="○"
-            tasks={bucketTasks("next")}
-            defaultExpanded={false}
-            onComplete={handleComplete}
-            onUpdateNote={handleUpdateNote}
-          />
-          <BucketList
-            bucket="later"
-            label="Later"
-            icon="◌"
-            tasks={bucketTasks("later")}
-            defaultExpanded={false}
-            onComplete={handleComplete}
-            onUpdateNote={handleUpdateNote}
-          />
-        </DndContext>
-
-        <button
-          onClick={() => setShowAdd(true)}
-          className="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-[var(--accent-primary)] hover:bg-[var(--accent-hover)] text-white text-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-150 z-40 flex items-center justify-center"
-          aria-label="Add task"
-        >
-          +
+      <div className="terminal-command-row">
+        <button className="terminal-command active" onClick={() => setShowAdd(true)}>
+          [a] add task
         </button>
-
-        {showAdd && (
-          <AddTaskDialog
-            onAdd={handleAddTask}
-            onClose={() => setShowAdd(false)}
-          />
-        )}
+        <button className="terminal-command" onClick={() => fetchTasks()}>
+          [r] refresh
+        </button>
+        <span className="terminal-command">[{tasks.length}] total</span>
       </div>
+
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+      >
+        <BucketList
+          bucket="top5"
+          label="top 5"
+          icon="●"
+          tasks={bucketTasks("top5")}
+          defaultExpanded={true}
+          onComplete={handleComplete}
+          onUpdateNote={handleUpdateNote}
+        />
+        <BucketList
+          bucket="next"
+          label="next"
+          icon="○"
+          tasks={bucketTasks("next")}
+          defaultExpanded={true}
+          onComplete={handleComplete}
+          onUpdateNote={handleUpdateNote}
+        />
+        <BucketList
+          bucket="later"
+          label="later"
+          icon="◌"
+          tasks={bucketTasks("later")}
+          defaultExpanded={true}
+          onComplete={handleComplete}
+          onUpdateNote={handleUpdateNote}
+        />
+      </DndContext>
+
+      {showAdd && (
+        <AddTaskDialog
+          onAdd={handleAddTask}
+          onClose={() => setShowAdd(false)}
+        />
+      )}
     </div>
   );
 }

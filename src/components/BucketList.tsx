@@ -39,21 +39,21 @@ export default function BucketList({
   const { setNodeRef } = useDroppable({ id: bucket });
 
   return (
-    <div className="mb-4">
+    <section className="section mb-3">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex items-center gap-2 w-full text-left py-2 px-3 hover:bg-[var(--bg-secondary)] transition-colors"
+        className="flex items-center gap-2 w-full text-left px-3 py-2 border-b border-[var(--border)]"
       >
-        <span className="text-body">{icon}</span>
-        <span className="text-heading text-[var(--text-primary)] flex-1">{label}</span>
-        <span className="text-tiny text-[var(--text-muted)]">({tasks.length})</span>
-        <span className="text-tiny text-[var(--text-tertiary)]">
-          {expanded ? "−" : "+"}
+        <span className="text-small text-[var(--text-dim)]">{icon}</span>
+        <span className="text-heading text-[var(--text)] lowercase flex-1">
+          {label}
         </span>
+        <span className="text-small text-[var(--text-muted)]">({tasks.length})</span>
+        <span className="text-small text-[var(--text-dim)]">{expanded ? "−" : "+"}</span>
       </button>
 
       {expanded && (
-        <div ref={setNodeRef} className="border-t border-[var(--border)]">
+        <div ref={setNodeRef}>
           <SortableContext
             items={tasks.map((t) => t.id)}
             strategy={verticalListSortingStrategy}
@@ -71,12 +71,10 @@ export default function BucketList({
             ))}
           </SortableContext>
           {tasks.length === 0 && (
-            <p className="text-small text-[var(--text-muted)] py-4 px-3 text-center">
-              No tasks
-            </p>
+            <p className="text-small text-[var(--text-muted)] py-3 px-3">empty</p>
           )}
         </div>
       )}
-    </div>
+    </section>
   );
 }

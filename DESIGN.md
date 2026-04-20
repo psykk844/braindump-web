@@ -1,97 +1,72 @@
-# BrainDump Design System - Taskbook Inspired
+# BrainDump Design System — Near-Exact Taskbook Web Clone
 
 ## Visual Direction
-Terminal-inspired productivity interface based on Taskbook's CLI aesthetic. Monospace typography, compact layout, minimal chrome, maximum information density. Clean, functional, keyboard-friendly design adapted for web/mobile.
+Near-exact web adaptation of Taskbook CLI. The interface should feel like a terminal task manager first, and a web app second: dark monochrome canvas, dense rows, minimal chrome, almost no decoration, and command-like language.
 
-## Color Palette
+## Core Fidelity Rules
+1. Monospace everywhere, no mixed font families.
+2. High information density (tight vertical rhythm, compact controls).
+3. Flat UI only: no shadows, no gradients, no glassmorphism.
+4. Command-oriented copy (`[a] add`, `[b] board`, `@bucket`, `p:1`).
+5. Row-first interaction model: task rows are the primary surface.
+6. Navigation and actions must appear as terminal command rows, not mobile app chrome.
 
-### Light Terminal Theme
+## Color Tokens
 ```css
---bg-primary: #fafafa;
---bg-secondary: #f5f5f5;
---bg-tertiary: #eeeeee;
-
---text-primary: #212121;
---text-secondary: #424242;
---text-tertiary: #757575;
---text-muted: #9e9e9e;
-
---accent-blue: #2196f3;
---accent-green: #4caf50;
---accent-orange: #ff9800;
---accent-red: #f44336;
-
---border: #e0e0e0;
---border-dark: #bdbdbd;
-
---shadow: rgba(0, 0, 0, 0.05);
+--bg: #101010;
+--bg-muted: #151515;
+--surface: #1b1b1b;
+--text: #e8e8e8;
+--text-dim: #b5b5b5;
+--text-muted: #8a8a8a;
+--border: #2a2a2a;
+--accent: #7cc7ff;
+--accent-success: #8fd18a;
+--accent-warn: #f2c37a;
+--accent-danger: #ef8f8f;
 ```
 
 ## Typography
+- Font stack: `SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace`
+- Body: 14px / 1.35
+- Small/meta: 12px / 1.3
+- Section headers: 13px / 600
+- No decorative font weights; use weight to indicate state only.
 
-### Font Stack
-```css
-font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 'Source Code Pro', monospace;
-```
+## Layout and Spacing
+- Max content width: ~960px
+- Global spacing rhythm: 4 / 8 / 12 / 16px
+- Task row vertical padding: 6–8px
+- Section spacing: 12px
+- Border radius: 0–2px only
 
-### Scale (Compact, Terminal-like)
-- **Heading**: 16px / 600 / 1.4
-- **Body**: 14px / 400 / 1.5
-- **Small**: 13px / 400 / 1.4
-- **Tiny**: 12px / 400 / 1.3
-
-## Layout Principles
-
-1. **Compact Density**: Minimal padding, tight spacing
-2. **Terminal Width**: Max 800px for readability
-3. **List-First**: Everything is a list
-4. **No Cards**: Flat, bordered sections only
-5. **Monospace Grid**: Align to character grid
-
-## Component Patterns
-
-### Task Item
-```
-[ ] 1. Task title here                    @board  p:2  ★
-```
-- Checkbox: `[ ]` or `[✓]`
-- ID: Small number
-- Title: Monospace, truncate long
-- Metadata: Right-aligned (board, priority, star)
+## Component Rules
+### Command Row
+- Textual command affordances (`[a] add task`, `[i] inbox`, `[r] refresh`)
+- Active route visually emphasized through subtle background and text contrast
 
 ### Section Header
-```
-● Top 5 (3)
-```
-- Icon: ●, ○, ◌
-- Title: Bold
-- Count: In parentheses
+- ASCII bullet + lowercase label + count: `● top 5 (3)`
+- Expand/collapse indicator at right (`+` / `−`)
 
-### Priority Indicators
-- p:1 - Normal (no color)
-- p:2 - Medium (orange)
-- p:3 - High (red)
+### Task Row
+- Left: `[ ]` / `[x]`
+- Body: title
+- Right metadata: `@top5`, optional `p:1..3`, drag marker (`::`)
+- Notes indicator should be textual (`[note]`), not emoji
 
-## Spacing System
-```css
---space-xs: 4px;
---space-sm: 8px;
---space-md: 12px;
---space-lg: 16px;
---space-xl: 24px;
-```
+### Dialog
+- Terminal panel with hard border, no blur effect
+- Inputs are flat bordered fields
+- Buttons are command-like (`[esc] cancel`, `[enter] add`)
 
-## Do's
-✓ Use monospace everywhere
-✓ Keep layout compact and dense
-✓ Use simple ASCII-style icons
-✓ Align metadata to right
-✓ Show IDs for keyboard navigation
-✓ Minimal borders, flat design
+## Do
+- Keep copy concise and command-oriented
+- Preserve keyboard-friendly focus states
+- Prefer textual cues over iconography
 
-## Don'ts
-✗ No rounded corners (except buttons)
-✗ No shadows (except subtle on hover)
-✗ No gradients
-✗ No fancy animations
-✗ No card-based layouts
+## Don't
+- No floating action button
+- No bottom mobile tab bar
+- No rounded "card" visual language
+- No colorful badge-heavy UI

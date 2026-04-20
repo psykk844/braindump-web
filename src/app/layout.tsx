@@ -1,13 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import BottomNav from "@/components/BottomNav";
-
-const inter = Inter({ 
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
+import TerminalNav from "@/components/TerminalNav";
 
 export const metadata: Metadata = {
   title: "BrainDump",
@@ -19,7 +12,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#ffffff",
+  themeColor: "#101010",
 };
 
 export default function RootLayout({
@@ -29,9 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-[var(--bg-secondary)] text-[var(--text-primary)] min-h-screen`}>
-        <main className="pb-20">{children}</main>
-        <BottomNav />
+      <body className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+        <TerminalNav />
+        <main>{children}</main>
       </body>
     </html>
   );
