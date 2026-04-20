@@ -39,23 +39,23 @@ export default function BucketList({
   const { setNodeRef } = useDroppable({ id: bucket });
 
   return (
-    <div className="mb-8">
+    <div className="mb-6 bg-white rounded-lg shadow-sm border border-[var(--border-light)] overflow-hidden">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex items-center gap-3 w-full text-left py-3 px-2 group hover:bg-[var(--bg-tertiary)] rounded-[var(--radius-md)] transition-all"
+        className="flex items-center gap-4 w-full text-left py-4 px-5 group hover:bg-[var(--bg-secondary)] transition-all"
       >
         <span className="text-2xl">{icon}</span>
-        <span className="text-heading-2 text-[var(--text-primary)]">{label}</span>
-        <span className="text-caption text-[var(--text-tertiary)] bg-[var(--bg-tertiary)] px-3 py-1 rounded-full font-medium">
+        <span className="text-heading-2 text-[var(--text-primary)] flex-1">{label}</span>
+        <span className="text-small text-[var(--text-tertiary)] bg-[var(--bg-tertiary)] px-3 py-1 rounded-full font-medium min-w-[32px] text-center">
           {tasks.length}
         </span>
-        <span className="ml-auto text-[var(--text-tertiary)] group-hover:text-[var(--text-secondary)] transition-colors text-xl">
+        <span className="text-[var(--text-tertiary)] group-hover:text-[var(--text-secondary)] transition-colors text-2xl">
           {expanded ? "−" : "+"}
         </span>
       </button>
 
       {expanded && (
-        <div ref={setNodeRef} className="min-h-[20px] mt-4 space-y-2">
+        <div ref={setNodeRef} className="min-h-[20px] px-5 pb-4 space-y-3 bg-[var(--bg-secondary)]">
           <SortableContext
             items={tasks.map((t) => t.id)}
             strategy={verticalListSortingStrategy}
@@ -73,8 +73,8 @@ export default function BucketList({
             ))}
           </SortableContext>
           {tasks.length === 0 && (
-            <p className="text-small text-[var(--text-tertiary)] py-12 text-center">
-              No tasks
+            <p className="text-small text-[var(--text-tertiary)] py-8 text-center">
+              No tasks yet
             </p>
           )}
         </div>
