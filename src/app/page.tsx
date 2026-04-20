@@ -132,62 +132,64 @@ export default function BoardPage() {
   }
 
   return (
-    <div className="pt-8 pb-4">
-      <div className="mb-10">
-        <h1 className="text-heading-2 text-[var(--text-primary)] mb-2 font-medium tracking-tight">Board</h1>
-        <p className="text-caption text-[var(--text-tertiary)]">
-          Focus on what matters most
-        </p>
+    <div className="min-h-screen bg-[var(--bg-secondary)]">
+      <div className="max-w-2xl mx-auto px-4 pt-6 pb-24">
+        <div className="mb-8">
+          <h1 className="text-heading-1 text-[var(--text-primary)] mb-2">Board</h1>
+          <p className="text-small text-[var(--text-tertiary)]">
+            Focus on what matters most
+          </p>
+        </div>
+
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <BucketList
+            bucket="top5"
+            label="Top 5"
+            icon="●"
+            tasks={bucketTasks("top5")}
+            defaultExpanded={true}
+            onComplete={handleComplete}
+            onUpdateNote={handleUpdateNote}
+          />
+          <BucketList
+            bucket="next"
+            label="Next"
+            icon="○"
+            tasks={bucketTasks("next")}
+            defaultExpanded={false}
+            onComplete={handleComplete}
+            onUpdateNote={handleUpdateNote}
+          />
+          <BucketList
+            bucket="later"
+            label="Later"
+            icon="◌"
+            tasks={bucketTasks("later")}
+            defaultExpanded={false}
+            onComplete={handleComplete}
+            onUpdateNote={handleUpdateNote}
+          />
+        </DndContext>
+
+        <button
+          onClick={() => setShowAdd(true)}
+          className="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-[var(--accent-primary)] hover:bg-[var(--accent-hover)] text-white text-2xl font-medium shadow-lg hover:shadow-xl transition-all duration-150 z-40 flex items-center justify-center"
+          aria-label="Add task"
+        >
+          +
+        </button>
+
+        {showAdd && (
+          <AddTaskDialog
+            onAdd={handleAddTask}
+            onClose={() => setShowAdd(false)}
+          />
+        )}
       </div>
-
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
-        <BucketList
-          bucket="top5"
-          label="Top 5"
-          icon="●"
-          tasks={bucketTasks("top5")}
-          defaultExpanded={true}
-          onComplete={handleComplete}
-          onUpdateNote={handleUpdateNote}
-        />
-        <BucketList
-          bucket="next"
-          label="Next"
-          icon="○"
-          tasks={bucketTasks("next")}
-          defaultExpanded={false}
-          onComplete={handleComplete}
-          onUpdateNote={handleUpdateNote}
-        />
-        <BucketList
-          bucket="later"
-          label="Later"
-          icon="◌"
-          tasks={bucketTasks("later")}
-          defaultExpanded={false}
-          onComplete={handleComplete}
-          onUpdateNote={handleUpdateNote}
-        />
-      </DndContext>
-
-      <button
-        onClick={() => setShowAdd(true)}
-        className="fixed bottom-20 right-4 w-12 h-12 rounded-full bg-[var(--accent-violet)] hover:bg-[var(--accent-hover)] text-white text-xl font-medium shadow-lg transition-all duration-150 z-40 flex items-center justify-center"
-        aria-label="Add task"
-      >
-        +
-      </button>
-
-      {showAdd && (
-        <AddTaskDialog
-          onAdd={handleAddTask}
-          onClose={() => setShowAdd(false)}
-        />
-      )}
     </div>
   );
 }

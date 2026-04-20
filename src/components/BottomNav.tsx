@@ -29,30 +29,32 @@ export default function BottomNav() {
   }, []);
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 backdrop-blur-xl bg-[var(--bg-panel)]/80 border-t border-[var(--border-standard)] z-50">
-      <div className="flex justify-around items-center h-14 max-w-2xl mx-auto">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-[var(--border-light)] z-50 shadow-lg">
+      <div className="flex justify-around items-center h-16 max-w-2xl mx-auto">
         {tabs.map((tab) => {
           const isActive =
             tab.href === "/" ? pathname === "/" : pathname.startsWith(tab.href);
+          const unreadCount = tab.label === "Inbox" ? inboxCount : 0;
+          
           return (
             <Link
               key={tab.href}
               href={tab.href}
               className={`flex flex-col items-center justify-center w-full h-full transition-all duration-150 ${
                 isActive 
-                  ? "text-[var(--text-primary)]" 
+                  ? "text-[var(--accent-primary)]" 
                   : "text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]"
               }`}
             >
-              <span className="text-lg relative font-medium">
+              <span className="text-xl mb-1 relative">
                 {tab.icon}
-                {tab.label === "Inbox" && inboxCount > 0 && (
-                  <span className="absolute -top-1 -right-2 bg-[var(--accent-violet)] text-white text-[9px] font-bold rounded-full min-w-[16px] h-4 px-1 flex items-center justify-center">
-                    {inboxCount > 99 ? "99" : inboxCount}
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-2 bg-[var(--accent-primary)] text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                    {unreadCount}
                   </span>
                 )}
               </span>
-              <span className="text-label mt-0.5">{tab.label}</span>
+              <span className="text-caption font-medium">{tab.label}</span>
             </Link>
           );
         })}

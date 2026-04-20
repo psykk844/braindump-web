@@ -19,7 +19,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#08090a",
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({
@@ -28,9 +28,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.className} bg-atmospheric text-[var(--text-primary)] min-h-screen`}>
-        <main className="pb-20 max-w-2xl mx-auto px-4">{children}</main>
+    <html lang="en">
+      <body className={`${inter.className} bg-[var(--bg-secondary)] text-[var(--text-primary)] min-h-screen`}>
+        <main className="pb-20">{children}</main>
         <BottomNav />
       </body>
     </html>
